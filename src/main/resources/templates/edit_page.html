@@ -37,10 +37,16 @@
     <input type="text" th:field="*{password}" id="password"/>
     <br/>
     <br/>
-    <select multiple size="2" name="roleSet" required class="form-control form-control-sm">
-        <option value="1">ROLE_ADMIN</option>
-        <option selected="selected" value="2">ROLE_USER</option>
-    </select>
+    <tr style="text-align: right;"><td colspan="2">
+        <br/>
+        <label>Roles:
+            <input type="checkbox" name="roles"
+                   th:each="role : ${allRoles}"
+                   th:text="${role.getName()}"
+                   th:value="${role.id}"
+                   th:field="*{roleSet}"
+            />
+        </label>
     <br/>
     <br/>
     <input type="submit" value="Update!"/>

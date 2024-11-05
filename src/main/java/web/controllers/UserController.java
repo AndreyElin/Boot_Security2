@@ -54,6 +54,7 @@ public class UserController {
     public String editUser(@PathVariable("id") long id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
+        model.addAttribute("allRoles", roleService.getAll());
         return "edit_page";
     }
 
@@ -64,19 +65,15 @@ public class UserController {
     }
 
     @PostMapping(value = "/createUser")
-    public String createUser(@ModelAttribute("user") User user, @RequestParam ArrayList<String> listRoleId) {
-        Set<Role> userRole = new HashSet<>();
-        for (String roleId : listRoleId) {
-            Role role = roleService.getById(Long.parseLong(roleId));
-            userRole.add(role);
-        }
-        user.setRoleSet(userRole);
+    public String createUser(@ModelAttribute("user") User user) {
         userService.create(user);
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/newUser")
-    public String newUser(@ModelAttribute("user") User user) {
+    public String newUser(Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("roles", roleService.getAll());
         return "new_user";
     }
 }

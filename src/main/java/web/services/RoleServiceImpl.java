@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import web.dao.RoleRepository;
 import web.models.Role;
 
+import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
@@ -24,6 +26,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void saveRole(Role role) {
         roleRepository.save(role);
+    }
+
+    @Override
+    public List<Role> getAll() {
+        return roleRepository.findAll();
     }
 
 }
